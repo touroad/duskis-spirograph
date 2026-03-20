@@ -6,6 +6,11 @@ import java.awt.*;
 public class SpirographView extends JComponent {
     SpirographModel draw = new SpirographModel(200,75,55,8000,0.007);
 
+    public void setDraw(SpirographModel draw){
+        this.draw = draw;
+        repaint();
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
