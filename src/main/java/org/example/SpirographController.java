@@ -1,58 +1,68 @@
 package org.example;
 
 import javax.swing.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SpirographController {
-    private SpirographView spirographView;
-    private JLabel largeR;
-    private JLabel smallr;
-    private JLabel penDistance;
-    private JLabel numSteps;
-    private JLabel angleSteps;
+    private final SpirographView spirographView;
+    private final JTextField Rfield;
+    private final JTextField rfield;
+    private final JTextField penDfield;
+    private final JTextField numStepsfield;
+    private final JTextField anglefield;
 
-    private JTextField Rfield;
-    private JTextField rfield;
-    private JTextField penDfield;
-    private JTextField numStepsfield;
-    private  JTextField anglefield;
+    private AtomicBoolean stopRunnable;
 
     public SpirographController(SpirographView spirographView,
-                                JLabel largeR,
-                                JLabel smallr,
-                                JLabel penDistance,
-                                JLabel numSteps,
-                                JLabel angleSteps,
                                 JTextField Rfield,
                                 JTextField rfield,
                                 JTextField penDfield,
                                 JTextField numStepsfield,
                                 JTextField anglefield) {
         this.spirographView = spirographView;
-        this.largeR = largeR;
-        this.smallr = smallr;
-        this.penDistance = penDistance;
-        this.numSteps = numSteps;
-        this.angleSteps = angleSteps;
         this.Rfield = Rfield;
         this.rfield = rfield;
         this.penDfield = penDfield;
         this.numStepsfield = numStepsfield;
         this.anglefield = anglefield;
+        updateModel();
     }
 
 
-    public void updateDraw(JTextField Rfield,
-                           JTextField rfield,
-                           JTextField penDfield,
-                           JTextField numStepsfield,
-                           JTextField anglefield){
-        double R = Double.parseDouble(Rfield.getText());
-        double r = Double.parseDouble(rfield.getText());
-        double d = Double.parseDouble(penDfield.getText());
-        double num = Double.parseDouble(numStepsfield.getText());
-        double a = Double.parseDouble(anglefield.getText());
-        SpirographModel temp = new SpirographModel(R, r, d, num, a);
-        spirographView.setDraw(temp);
+    public void updateModel() {
+        spirographView.model.setLargeRadius(Double.parseDouble(Rfield.getText()));
+        spirographView.model.setSmallRadius(Double.parseDouble(rfield.getText()));
+        spirographView.model.setPenDistance(Double.parseDouble(penDfield.getText()));
+        spirographView.model.setNumSteps(Integer.parseInt(numStepsfield.getText()));
+        spirographView.model.setAnglePerStep(Double.parseDouble(anglefield.getText()));
     }
 
+    public void startAnimation() {
+        if (this.stopRunnable != null) {
+            this.stopRunnable.set(true);
+        }
+
+        final AtomicBoolean stopper = new AtomicBoolean(false);
+        this.stopRunnable = stopper;
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                for (int curr = 1; curr < spirographView.model.getNumSteps(); curr++) {
+                    if (stopper.get()) {
+                        break;
+                    }
+                    spirographView.setCurr(curr);
+                    spirographView.repaint();
+                    try {
+                        Thread.sleep(3);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+    }
 }

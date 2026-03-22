@@ -4,11 +4,11 @@ public class SpirographModel {
     private double largeRadius;
     private double smallRadius;
     private double penDistance;
-    private double numSteps;
+    private int numSteps;
     private double anglePerStep;
 
     public SpirographModel(double largeRadius, double smallRadius,
-                           double penDistance, double numSteps, double anglePerStep) {
+                           double penDistance, int numSteps, double anglePerStep) {
         this.largeRadius = largeRadius;
         this.smallRadius = smallRadius;
         this.penDistance = penDistance;
@@ -16,11 +16,11 @@ public class SpirographModel {
         this.anglePerStep = anglePerStep;
     }
 
-    public double getNumSteps() {
+    public int getNumSteps() {
         return numSteps;
     }
 
-    public void setNumSteps(double numSteps) {
+    public void setNumSteps(int numSteps) {
         this.numSteps = numSteps;
     }
 
