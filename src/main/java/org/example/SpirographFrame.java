@@ -2,6 +2,8 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -26,6 +28,8 @@ public class SpirographFrame extends JFrame {
         JTextField anglefield = new JTextField("0.007");
 
         SpirographView spirographView = new SpirographView();
+        add(spirographView, BorderLayout.CENTER);
+
         SpirographController controller = new SpirographController(spirographView,
                 largeR,
                 smallr,
@@ -67,6 +71,13 @@ public class SpirographFrame extends JFrame {
 
         JButton button = new JButton("Draw");
 
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.updateDraw(Rfield, rfield, penDfield, numStepsfield, anglefield);
+            }
+        });
+
         JPanel southPanel = new JPanel();
         southPanel.add(largeR);
         southPanel.add(Rfield);
@@ -78,6 +89,7 @@ public class SpirographFrame extends JFrame {
         southPanel.add(numStepsfield);
         southPanel.add(angleSteps);
         southPanel.add(anglefield);
+        southPanel.add(button);
 
         add(southPanel, BorderLayout.SOUTH);
     }

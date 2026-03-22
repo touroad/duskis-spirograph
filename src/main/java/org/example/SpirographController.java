@@ -40,13 +40,19 @@ public class SpirographController {
         this.anglefield = anglefield;
     }
 
-    /*
+
     public void updateDraw(JTextField Rfield,
                            JTextField rfield,
                            JTextField penDfield,
                            JTextField numStepsfield,
                            JTextField anglefield){
-        spirographView.setDraw();
+        double R = Double.parseDouble(Rfield.getText());
+        double r = Double.parseDouble(rfield.getText());
+        double d = Double.parseDouble(penDfield.getText());
+        double num = Double.parseDouble(numStepsfield.getText());
+        double a = Double.parseDouble(anglefield.getText());
+        SpirographModel temp = new SpirographModel(R, r, d, num, a);
+        spirographView.setDraw(temp);
     }
-     */
+
 }
