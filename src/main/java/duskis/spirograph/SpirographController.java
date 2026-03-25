@@ -1,4 +1,4 @@
-package org.example;
+package duskis.spirograph;
 
 import javax.swing.*;
 import java.util.concurrent.atomic.AtomicBoolean;
