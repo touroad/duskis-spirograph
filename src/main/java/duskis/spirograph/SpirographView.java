@@ -1,16 +1,17 @@
-package org.example;
+package duskis.spirograph;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class SpirographView extends JComponent {
+
+    private int currStep = 0;
+
     private SpirographModel model = new SpirographModel(200, 75, 55, 8000, 0.007);
 
     public SpirographModel getModel() {
         return this.model;
     }
-
-    private int currStep = 0;
 
     public void setCurr(int curr) {
         this.currStep = curr;
