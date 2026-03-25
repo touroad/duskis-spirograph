@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SpirographController {
     private final SpirographView spirographView;
+    private final SpirographModel model;
     private final JTextField largeRfield;
     private final JTextField rfield;
     private final JTextField penDfield;
@@ -14,12 +15,14 @@ public class SpirographController {
     private AtomicBoolean stopRunnable;
 
     public SpirographController(SpirographView spirographView,
+                                SpirographModel model,
                                 JTextField largeRfield,
                                 JTextField rfield,
                                 JTextField penDfield,
                                 JTextField numStepsfield,
                                 JTextField anglefield) {
         this.spirographView = spirographView;
+        this.model = model;
         this.largeRfield = largeRfield;
         this.rfield = rfield;
         this.penDfield = penDfield;
@@ -30,13 +33,11 @@ public class SpirographController {
 
 
     public void updateModel() {
-        SpirographModel temp = spirographView.getModel();
-
-        temp.setLargeRadius(Double.parseDouble(largeRfield.getText()));
-        temp.setSmallRadius(Double.parseDouble(rfield.getText()));
-        temp.setPenDistance(Double.parseDouble(penDfield.getText()));
-        temp.setNumSteps(Integer.parseInt(numStepsfield.getText()));
-        temp.setAnglePerStep(Double.parseDouble(anglefield.getText()));
+        model.setLargeRadius(Double.parseDouble(largeRfield.getText()));
+        model.setSmallRadius(Double.parseDouble(rfield.getText()));
+        model.setPenDistance(Double.parseDouble(penDfield.getText()));
+        model.setNumSteps(Integer.parseInt(numStepsfield.getText()));
+        model.setAnglePerStep(Double.parseDouble(anglefield.getText()));
     }
 
     public void startAnimation() {
@@ -51,12 +52,12 @@ public class SpirographController {
         //it is cool and atomic booleans are more reaching i think
 
         Runnable runnable = new Runnable() {
-            SpirographModel temp = spirographView.getModel();
+            SpirographModel model = spirographView.getModel();
 
             //should i instead set temp on top?
             @Override
             public void run() {
-                for (int curr = 1; curr < temp.getNumSteps(); curr++) {
+                for (int curr = 1; curr < model.getNumSteps(); curr++) {
                     if (stopper.get()) {
                         break;
                     }

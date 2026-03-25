@@ -25,8 +25,10 @@ public class SpirographFrame extends JFrame {
         JTextField anglefield = new JTextField("0.007");
 
         SpirographView spirographView = new SpirographView();
+        SpirographModel model = spirographView.getModel();
 
         SpirographController controller = new SpirographController(spirographView,
+                model,
                 largeRfield,
                 rfield,
                 penDfield,
