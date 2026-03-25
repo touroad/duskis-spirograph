@@ -46,7 +46,8 @@ public class SpirographController {
 
         final AtomicBoolean stopper = new AtomicBoolean(false);
         this.stopRunnable = stopper;
-        //this code is responsible for running the animation loop. without it multiple animation loops will try to run at once making it glitchy
+        //this code is responsible for running the animation loop.
+        //without it multiple animation loops will try to run at once making it glitchy
         //it is cool and atomic booleans are more reaching i think
 
         Runnable runnable = new Runnable() {
