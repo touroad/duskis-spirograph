@@ -14,17 +14,18 @@ public class SpirographFrame extends JFrame {
         setLayout(new GridBagLayout());
 
         JLabel largeR = new JLabel("largeRadius: ");
-        JTextField largeRfield = new JTextField("200");
         JLabel smallr = new JLabel("smallRadius: ");
-        JTextField rfield = new JTextField("75");
         JLabel penDistance = new JLabel("penDistance: ");
-        JTextField penDfield = new JTextField("55");
         JLabel numSteps = new JLabel("numSteps: ");
-        JTextField numStepsfield = new JTextField("8000");
         JLabel angleSteps = new JLabel("anglePerStep: ");
-        JTextField anglefield = new JTextField("0.007");
-
         SpirographView spirographView = new SpirographView();
+
+
+        JTextField largeRfield = new JTextField("200");
+        JTextField rfield = new JTextField("75");
+        JTextField penDfield = new JTextField("55");
+        JTextField numStepsfield = new JTextField("8000");
+        JTextField anglefield = new JTextField("0.007");
 
         SpirographController controller = new SpirographController(spirographView,
                 largeRfield,
