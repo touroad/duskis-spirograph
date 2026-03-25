@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SpirographController {
     private final SpirographView spirographView;
-    private final JTextField Rfield;
+    private final JTextField largeRfield;
     private final JTextField rfield;
     private final JTextField penDfield;
     private final JTextField numStepsfield;
@@ -14,13 +14,13 @@ public class SpirographController {
     private AtomicBoolean stopRunnable;
 
     public SpirographController(SpirographView spirographView,
-                                JTextField Rfield,
+                                JTextField largeRfield,
                                 JTextField rfield,
                                 JTextField penDfield,
                                 JTextField numStepsfield,
                                 JTextField anglefield) {
         this.spirographView = spirographView;
-        this.Rfield = Rfield;
+        this.largeRfield = largeRfield;
         this.rfield = rfield;
         this.penDfield = penDfield;
         this.numStepsfield = numStepsfield;
@@ -30,11 +30,13 @@ public class SpirographController {
 
 
     public void updateModel() {
-        spirographView.model.setLargeRadius(Double.parseDouble(Rfield.getText()));
-        spirographView.model.setSmallRadius(Double.parseDouble(rfield.getText()));
-        spirographView.model.setPenDistance(Double.parseDouble(penDfield.getText()));
-        spirographView.model.setNumSteps(Integer.parseInt(numStepsfield.getText()));
-        spirographView.model.setAnglePerStep(Double.parseDouble(anglefield.getText()));
+        SpirographModel temp = spirographView.getModel();
+
+        temp.setLargeRadius(Double.parseDouble(largeRfield.getText()));
+        temp.setSmallRadius(Double.parseDouble(rfield.getText()));
+        temp.setPenDistance(Double.parseDouble(penDfield.getText()));
+        temp.setNumSteps(Integer.parseInt(numStepsfield.getText()));
+        temp.setAnglePerStep(Double.parseDouble(anglefield.getText()));
     }
 
     public void startAnimation() {
@@ -44,11 +46,16 @@ public class SpirographController {
 
         final AtomicBoolean stopper = new AtomicBoolean(false);
         this.stopRunnable = stopper;
+        //this code is responsible for running the animation loop. without it multiple animation loops will try to run at once making it glitchy
+        //it is cool and atomic booleans are more reaching i think
 
         Runnable runnable = new Runnable() {
+            SpirographModel temp = spirographView.getModel();
+
+            //should i instead set temp on top?
             @Override
             public void run() {
-                for (int curr = 1; curr < spirographView.model.getNumSteps(); curr++) {
+                for (int curr = 1; curr < temp.getNumSteps(); curr++) {
                     if (stopper.get()) {
                         break;
                     }

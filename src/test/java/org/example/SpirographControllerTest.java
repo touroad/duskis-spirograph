@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SpirographControllerTest {
     @Test
-    void updateDraw() {
+    void updateModel() {
         SpirographView view = new SpirographView();
         JTextField Rfield2 = new JTextField("210");
         JTextField rfield2 = new JTextField("65");
@@ -25,7 +25,7 @@ public class SpirographControllerTest {
 
         controller.updateModel();
 
-        SpirographModel model = view.model;
+        SpirographModel model = view.getModel();
 
         assertEquals(210, model.getLargeRadius());
         assertEquals(65, model.getSmallRadius());
